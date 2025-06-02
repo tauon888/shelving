@@ -1,17 +1,26 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-
 #
 # shelving/shelf.py
 #     A simple program to draw a bookcase with measurements.
 # 
 # Author: Mike Smith
 # Date: 31-05-2025  
+# 
+# Modification History:
+#   M.R. Smith - 31-05-2025 - Initial version.
+#   M.R. Smith - 02-06-2025 - Modified thickness from 24mm to 18mm and adjusted shelf heights.
 #
+
+# Variables and defaults.
 x_pad = 10
 y_pad = 10
 tick_size = 3
 materials = {}
+
+# Defaults.
+thickness = 1.8  # Thickness of the edges and uprights
+plinth = 13  # Height of the plinth
 
 
 def draw_width(ax, width):
@@ -100,7 +109,10 @@ def draw_rectangle(ax, x, y, width, height, depth, fill=True):
         add_to_materials(244, height)
         add_to_materials(remainder, height)
     else:
-        add_to_materials(width, height)
+        if height > width:
+            add_to_materials(height, width)
+        else:
+            add_to_materials(width, height)
 
 
 def add_to_materials(width, height):
@@ -219,19 +231,21 @@ def draw_bookcase(width, height, depth, edge_wd, shelf_heights, lside_wd, rside_
     fig.savefig(f'{img_file}.png', facecolor=fig.get_facecolor(), edgecolor='none')
 
 
-draw_bookcase(width=86.8, height=244+12.5, depth=30, shelf_heights=[40, 40, 35, 35, 35],
-              edge_wd=2.4, lside_wd=2.4, rside_wd=0, uprt_wd=2.4, plin_ht=12.5, top_ht=0, divides=1, 
+draw_bookcase(width=86.8, height=244+plinth, depth=30, shelf_heights=[40, 40, 35, 35, 35],
+              edge_wd=thickness, lside_wd=thickness, rside_wd=0, uprt_wd=thickness, plin_ht=plinth, top_ht=0, divides=1, 
               title="Laundry ", fill=True, img_file='laundry')
 
-draw_bookcase(width=259, height=244+12, depth=30, shelf_heights=[40, 40, 35, 35, 35],
-              edge_wd=2.4, lside_wd=0, rside_wd=0, uprt_wd=2.4, plin_ht=12, top_ht=0, divides=3, 
+draw_bookcase(width=259.4, height=244+plinth, depth=30, shelf_heights=[40, 40, 35, 35, 35],
+              edge_wd=thickness, lside_wd=0, rside_wd=0, uprt_wd=thickness, plin_ht=plinth, top_ht=0, divides=3, 
               title="Kim's Study", fill=True, img_file='kim_study')
 
-draw_bookcase(width=258.4, height=244+13, depth=21, shelf_heights=[38, 38, 35, 35, 35],
-              edge_wd=2.4, lside_wd=2.4, rside_wd=2.4, uprt_wd=2.4, plin_ht=13, top_ht=2.4, divides=3, 
+draw_bookcase(width=258.4, height=244+plinth, depth=21, shelf_heights=[38, 38, 35, 35, 35],
+              edge_wd=thickness, lside_wd=thickness, rside_wd=thickness, uprt_wd=thickness, plin_ht=plinth, top_ht=thickness, divides=3, 
               title="Mikes's Studio 1", fill=True, img_file='mikes_studio1')
 
-draw_bookcase(width=244.3, height=244+17, depth=42, shelf_heights=[34, 34, 34, 60.2, 27, 38],
-              edge_wd=2.4, lside_wd=2.4, rside_wd=2.4, uprt_wd=2.4, plin_ht=17, top_ht=2.4, divides=5, 
+plinth = 17  # Height of the plinth
+draw_bookcase(width=244.3, height=244+plinth, depth=42, shelf_heights=[34, 34, 34, 59.2, 34],
+              edge_wd=thickness, lside_wd=thickness, rside_wd=thickness, uprt_wd=thickness, plin_ht=plinth, top_ht=thickness, divides=5, 
               title="Mikes's Studio 2", fill=True, img_file='mikes_studio2')
+
 
